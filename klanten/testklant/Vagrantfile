@@ -1,17 +1,22 @@
 #
+(1..2).each do |num| # loop
 Vagrant.configure("2") do |config|
   config.vm.box = "ubuntu/trusty64"
+  config.vm.network "private_network", ip: "192.168.1.11#{num}"
+  config.ssh.insert_key = false #Use vagrant default insecure key
+  config.ssh.private_key_path = ['~/.vagrant.d/insecure_private_key','~/.ssh/id_rsa'] # Specify path private key to ssh into guest machine 
 
-#Configuratie 
-(1..2).each do |aantal| # loop 
-config.vm.define "webserver-#{aantal}" do |web| #defineer de naam
-web.vm.hostname = "nginxServer" #defineer de hostaan
-web.vm.box = "ubuntu/trusty64" # defineer systeem
- 
+#Configuratie  
+  config.vm.define "webserver-#{num}" do |web| #defineer de naam
+  web.vm.hostname = "nginxServer" #defineer de hostaan
+  web.vm.box = "ubuntu/trusty64" # defineer systeem
+  config.vm.provision "file", source: "~/.ssh/id_rsa.pub", destination: "~/.ssh/authorized_keys" # copy & rename id_rsa.pub into vagrant as authorized_keys
+
+
 #Virtualbox settings
 web.vm.provider "virtualbox" do |vb|
   vb.gui = false
-  vb.name = "vagrant-web-box#{aantal}"
+  vb.name = "vagrant-web-box#{num}"
   vb.memory = "2048"
 
 
@@ -23,4 +28,4 @@ web.vm.provider "virtualbox" do |vb|
 end #configure
 end # web confgi
 end # virtualbox 
-end
+end # ?? ends something 
