@@ -1,16 +1,19 @@
 # Install NGINX webserver +
 ---
-- hosts: webserver
+- name: 'Install Nginx webserver'
+  hosts: webserver
   become: yes
-  task:
-    - name: "Install Nginx"
-      apt: 
-        name: ['nginx']
-        state: latest
+  tasks:
+  - name: 'Install Nginx apt'
+    apt:
+      name: nginx
+      state: latest
 
   handlers:
-  - name: "restart nginx"
+  - name: 'restart nginx'
     service:
-      name: nginx 
-      state: restarted   
+      name: nginx
+      state: restarted
+
+
 ...

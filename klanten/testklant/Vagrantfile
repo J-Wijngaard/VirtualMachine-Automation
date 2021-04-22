@@ -20,10 +20,11 @@ web.vm.provider "virtualbox" do |vb|
   vb.memory = "2048"
 
 
+
 #//// Deze is niet nodig ivm met ansible commands per klant  
  #Ansbile provisioning
  #web.vm.provision "ansible_local" do |ansible|
- #ansible.playbook = "nginxWeb.yaml" 
+ #ansible.playbook = "/nginxsetup.yml" 
 
 end #configure
 end # web confgi
